@@ -54,3 +54,5 @@ end
 gem "rspec-rails", "~> 8.0"
 gem "factory_bot_rails", "~> 6.5"
 gem "faker", "~> 3.5"
+
+gem "interactor", "~> 3.0"

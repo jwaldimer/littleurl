@@ -1,38 +1,40 @@
 class LittleUrlsController < ApplicationController
-  before_action :set_creator_id
 
   def new
     @little_url = LittleUrl.new
-    @urls = LittleUrl.where(creator_id: @creator_id).order(created_at: :desc)
+    @urls = LittleUrls::List.call(creator_id: creator_id).little_urls
   end
 
   def create
-    @little_url = LittleUrl.new(little_url_params)
-    @little_url.creator_id = @creator_id
+    result = LittleUrls::Create.call(
+      params: little_url_params.to_h.symbolize_keys,
+      cookies: cookies
+    )
 
-    if @little_url.save
-      redirect_to little_url_path(@little_url), notice: I18n.t("little_url.create.crated")
+    if result.success?
+      redirect_to little_url_path(result.little_url), notice: I18n.t('little_url.create.created')
     else
-      @urls = LittleUrl.where(creator_id: @creator_id)
-      render :new, status: :unprocessable_entity
+      @little_url = result.little_url || LittleUrl.new(little_url_params)
+      @urls = LittleUrls::List.call(creator_id: creator_id).little_urls
+      flash.now[:alert] = [
+        result.message,
+        (result.respond_to?(:errors) && result.errors.present? ? result.errors.to_sentence : nil)
+      ].compact.join(': ')
+      render :new, status: :unprocessable_entity      
     end
   end
 
   def show
+    @little_url = LittleUrl.find(params[:id])
   end
 
   def info
+    @little_url = LittleUrl.includes(:visits).find_by!(token: params[:token])
   end
 
   private
 
   def little_url_params
     params.require(:little_url).permit(LittleUrl::CREATE_PARAMS)
-  end
-
-  def set_creator_id
-    cookies.permanent.signed[:creator_id] ||= SecureRandom.uuid
-
-    @creator_id = cookies.signed[:creator_id]
   end
 end

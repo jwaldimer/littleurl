@@ -33,6 +33,7 @@ en:
     errors:
       token_reserved: is reserved and can not be used.
       must_be_valid: must be a valid URL http/https.
+      persist: The URL could not be created.
     new:
       title: Little URL
       original_url_text: Your original long URL
@@ -42,4 +43,7 @@ en:
       my_urls: My recents LittleURLs
       visit_url: Visit URL
     create:
-      crated: URL token created.
+      created: URL token created.
+      errors:
+        missing_params: Missing parameters.
+        missing_creator: creator_id is required.
