@@ -5,5 +5,6 @@ Rails.application.routes.draw do
 
   root 'little_urls#new'
   resources :little_urls, only: %i[create show]
-
+  resources :redirects, only: %i[show]
+  get '/:token/info', to: 'little_urls#info', as: :little_url_info
 end

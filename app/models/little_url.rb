@@ -1,6 +1,9 @@
 class LittleUrl < ApplicationRecord
   has_many :visits, dependent: :destroy
 
+  extend FriendlyId
+  friendly_id :token, use: :slugged
+
   VALID_TOKEN_REGEX = /\A[a-zA-Z0-9\-_]+\z/
   RESERVED_TOKENS = %w[api admin login logout users user new edit show token]
   CREATE_PARAMS = %i[original_url token description]

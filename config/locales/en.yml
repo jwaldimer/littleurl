@@ -42,6 +42,9 @@ en:
       action: Minimize URL
       my_urls: My recents LittleURLs
       visit_url: Visit URL
+      copy_link: "Copy link"
+      copy: "Copy"
+      copied: "Link copied ✅"
     create:
       created: URL token created.
       errors:

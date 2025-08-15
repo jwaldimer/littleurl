@@ -13,7 +13,7 @@
 
   <div>
     <%= form.label :description, t('little_url.new.description') %><br>
-    <%= form.textarea :description %>
+    <%= form.text_area :description %>
   </div>
 
   <div>
@@ -31,10 +31,14 @@
 
 <h2><%= t('little_url.new.my_urls') %></h2>
 <ul>
+
   <% @urls.each do |url| %>
+    <% short_link = redirect_url(url.friendly_id) %>
     <li>
-      <strong><%= "https://littleurl.com/#{url.token}" %>:</strong>
-      <%= link_to t('little_url.new.visit_url'), little_url_path(url) %> |
+      <p><strong><%= short_link %></strong></p>
+      <small><%= url.original_url %></small>
+      <%= link_to t('little_url.new.visit_url'), short_link, target: :_blank, rel: :noopener %>
+      <button type="button" class="copy-btn" data-copy="<%= short_link %>">Copy</button>
     </li>
   <% end %>
 </ul>

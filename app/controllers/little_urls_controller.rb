@@ -2,7 +2,7 @@ class LittleUrlsController < ApplicationController
 
   def new
     @little_url = LittleUrl.new
-    @urls = LittleUrls::List.call(creator_id: creator_id).little_urls
+    set_url_list
   end
 
   def create
@@ -11,11 +11,12 @@ class LittleUrlsController < ApplicationController
       cookies: cookies
     )
 
+    set_url_list
+
     if result.success?
       redirect_to little_url_path(result.little_url), notice: I18n.t('little_url.create.created')
     else
       @little_url = result.little_url || LittleUrl.new(little_url_params)
-      @urls = LittleUrls::List.call(creator_id: creator_id).little_urls
       flash.now[:alert] = [
         result.message,
         (result.respond_to?(:errors) && result.errors.present? ? result.errors.to_sentence : nil)
@@ -25,7 +26,7 @@ class LittleUrlsController < ApplicationController
   end
 
   def show
-    @little_url = LittleUrl.find(params[:id])
+    @little_url = LittleUrl.friendly.find(params[:id])
   end
 
   def info
@@ -36,5 +37,9 @@ class LittleUrlsController < ApplicationController
 
   def little_url_params
     params.require(:little_url).permit(LittleUrl::CREATE_PARAMS)
+  end
+
+  def set_url_list
+    @urls = LittleUrls::List.call(creator_id: creator_id).little_urls
   end
 end
