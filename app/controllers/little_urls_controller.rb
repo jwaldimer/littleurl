@@ -10,9 +10,8 @@ class LittleUrlsController < ApplicationController
       params: little_url_params.to_h.symbolize_keys,
       cookies: cookies
     )
-
     set_url_list
-
+    
     if result.success?
       redirect_to little_url_path(result.little_url), notice: I18n.t('little_url.create.created')
     else

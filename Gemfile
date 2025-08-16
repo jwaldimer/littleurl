@@ -57,3 +57,4 @@ gem "faker", "~> 3.5"
 
 gem "interactor", "~> 3.0"
 gem 'friendly_id', '~> 5.5.0'
+gem "rqrcode", "~> 3.0"

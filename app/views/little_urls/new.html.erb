@@ -38,7 +38,13 @@
       <p><strong><%= short_link %></strong></p>
       <small><%= url.original_url %></small>
       <%= link_to t('little_url.new.visit_url'), short_link, target: :_blank, rel: :noopener %>
-      <button type="button" class="copy-btn" data-copy="<%= short_link %>">Copy</button>
+      <button type="button" class="copy-btn" data-copy="<%= short_link %>">
+        <%= t('little_url.new.copy') %>
+      </button>
+      <details>
+        <summary><%= t('little_url.new.show_qr') %></summary>
+        <div><%= qr_svg_for(short_link, module_size: 6) %></div>
+      </details>
     </li>
   <% end %>
 </ul>
