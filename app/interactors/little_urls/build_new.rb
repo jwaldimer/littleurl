@@ -1,5 +1,5 @@
 module LittleUrls
-  class Build < ApplicationInteractor
+  class BuildNew < ApplicationInteractor
 
     def call
       context.little_url = LittleUrl.new(

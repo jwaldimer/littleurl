@@ -1,4 +1,5 @@
 class LittleUrlsController < ApplicationController
+  before_action :set_little_url, only: [:show, :edit, :update]
 
   def new
     @little_url = LittleUrl.new
@@ -11,9 +12,9 @@ class LittleUrlsController < ApplicationController
       cookies: cookies
     )
     set_url_list
-    
+
     if result.success?
-      redirect_to little_url_path(result.little_url), notice: I18n.t('little_url.create.created')
+      redirect_to root_path(result.little_url), notice: I18n.t('little_url.create.created')
     else
       @little_url = result.little_url || LittleUrl.new(little_url_params)
       flash.now[:alert] = [
@@ -24,12 +25,22 @@ class LittleUrlsController < ApplicationController
     end
   end
 
-  def show
-    @little_url = LittleUrl.friendly.find(params[:id])
-  end
+  def show; end
 
-  def info
-    @little_url = LittleUrl.includes(:visits).find_by!(token: params[:token])
+  def edit; end
+  
+  def update
+    result = LittleUrls::Update.call(
+      little_url: @little_url,
+      params: little_url_params.to_h.symbolize_keys
+    )
+
+    if result.success?
+      redirect_to root_path(result.little_url), notice: I18n.t('little_url.update.updated')
+    else
+      flash.now[:alert] = result.message
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   private
@@ -40,5 +51,9 @@ class LittleUrlsController < ApplicationController
 
   def set_url_list
     @urls = LittleUrls::List.call(creator_id: creator_id).little_urls
+  end
+
+  def set_little_url
+    @little_url = LittleUrl.friendly.find(params[:id])
   end
 end

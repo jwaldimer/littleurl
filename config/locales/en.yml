@@ -49,3 +49,7 @@ en:
       errors:
         missing_params: Missing parameters.
         missing_creator: creator_id is required.
+    edit:
+      title: Edit Little URL
+      link: Edit
+      back_home: Cancel

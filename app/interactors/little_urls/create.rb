@@ -2,7 +2,7 @@ module LittleUrls
   class Create < ApplicationOrganizer
     organize NormalizeParams,
              SetCreatorId,
-             Build,
+             BuildNew,
              Save
   end
 end

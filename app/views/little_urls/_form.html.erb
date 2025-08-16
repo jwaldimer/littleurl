@@ -1,0 +1,31 @@
+<%= form_with model: @little_url, local: true do |form| %>
+  <div>
+    <%= form.label :original_url, t('little_url.new.original_url_text') %><br>
+    <%= form.text_field :original_url, required: true %>
+  </div>
+
+  <div>
+    <%= form.label :token, t('little_url.new.token') %><br>
+    <%= form.text_field :token, required: true %>
+  </div>
+
+  <div>
+    <%= form.label :description, t('little_url.new.description') %><br>
+    <%= form.text_area :description %>
+  </div>
+
+  <div>
+    <%= form.submit t('little_url.new.action') %>
+    <% if @little_url.persisted? %>
+      <%= link_to t('little_url.edit.back_home'), root_path %>
+    <% end %>
+  </div>
+<% end %>
+
+<% if @little_url.errors.any? %>
+  <ul>
+    <% @little_url.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  </ul>
+<% end %>
