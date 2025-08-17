@@ -1,6 +1,7 @@
 module LittleUrls
   class Update < ApplicationOrganizer
-    organize NormalizeParams,
+    organize FindObject,
+             NormalizeParams,
              BuildEdit,
              Save
   end

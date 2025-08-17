@@ -32,24 +32,39 @@ en:
   little_url:
     errors:
       token_reserved: is reserved and can not be used.
-      must_be_valid: must be a valid URL http/https.
-      persist: The URL could not be created.
+      must_be_valid: must be a valid URL http/https
+      persist: The URL could not be created
+      forbidden: You do not have permission to perform this action
     new:
       title: Little URL
+      subtitle: The Original URL Shortener
+      subtitle2: Create shorter URLs with LittleURL.
       original_url_text: Your original long URL
       token: Custom minimized URL
-      description: Some description for yuour minimized URL
+      description: Some description for your minimized URL
       action: Minimize URL
       my_urls: My recents LittleURLs
+      my_urls_button: My LittleURLS
       visit_url: Visit URL
       copy: Copy
       show_qr: Show QR
     create:
       created: URL token created.
       errors:
-        missing_params: Missing parameters.
-        missing_creator: creator_id is required.
+        missing_params: Missing parameters
+        missing_creator: creator_id is required
     edit:
       title: Edit Little URL
       link: Edit
       back_home: Cancel
+    destroy:
+      button: Delete
+      confirm: Are you sure you want to delete this URL? This action cannot be undone
+      deleted: Little URL deleted!
+      failed: Your URL could not be removed. Please try again
+    destroy_all:
+      button: Clear History
+      confirm: Are you sure you want to delete ALL your URLs? This action cannot be undone
+      missing: Creator ID missing
+      deleted: All your URLs have been removed
+      failed: Your URLs could not be removed. Please try again

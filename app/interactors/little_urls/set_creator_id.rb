@@ -1,6 +1,5 @@
 module LittleUrls
   class SetCreatorId < ApplicationInteractor
-
     def call
       cookies = context.cookies
       

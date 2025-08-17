@@ -1,8 +1,8 @@
 class RedirectsController < ApplicationController
 
   def show
-    little_url = LittleUrl.friendly.find(params[:id])
-    LittleUrls::TrackVisit.call(little_url: little_url, ip: request.remote_ip, user_agent: request.user_agent)
+    result = Visits::Create.call(id: params[:id], request: request)
+    little_url = result.little_url
 
     redirect_to little_url.original_url, allow_other_host: true, status: :moved_permanently
   rescue ActiveRecord::RecordNotFound

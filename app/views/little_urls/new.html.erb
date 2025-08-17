@@ -1,22 +1,11 @@
-<h1><%= t('little_url.new.title') %></h1>
-<%= render 'form' %>
-
-<h2><%= t('little_url.new.my_urls') %></h2>
-<ul>
-  <% @urls.each do |url| %>
-    <% short_link = redirect_url(url.friendly_id) %>
-    <li>
-      <p><strong><%= short_link %></strong></p>
-      <small><%= url.original_url %></small>
-      <%= link_to t('little_url.new.visit_url'), short_link, target: :_blank, rel: :noopener %>
-      <%= link_to t('little_url.edit.link'), edit_little_url_path(url.token), data: { turbo: true } %>
-      <button type="button" class="copy-btn" data-copy="<%= short_link %>">
-        <%= t('little_url.new.copy') %>
-      </button>
-      <details>
-        <summary><%= t('little_url.new.show_qr') %></summary>
-        <div><%= qr_svg_for(short_link, module_size: 6) %></div>
-      </details>
-    </li>
-  <% end %>
-</ul>
+<div class="container">
+  <div class="row">
+    <div class="col-md-5 mx-auto p-2">
+      <h1 class="h1 mt-5 mb-4 align-middle"><%= t('little_url.new.title') %></h1>
+      <h4 class="h4"><%= t('little_url.new.subtitle') %></h4>
+      <h6 class="h6"><%= t('little_url.new.subtitle2') %></h6>
+      <%= render 'form' %>
+    </div>
+  </div>
+  <%= render 'my_urls' %>
+</div>

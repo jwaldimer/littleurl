@@ -1,31 +1,53 @@
-<%= form_with model: @little_url, local: true do |form| %>
-  <div>
-    <%= form.label :original_url, t('little_url.new.original_url_text') %><br>
-    <%= form.text_field :original_url, required: true %>
-  </div>
+<div class="card mb-3">
+  <div class="card-body">
+    <%= form_with model: @little_url, local: true, html: { class: "row g-3" } do |form| %>
+      <div class="col-12">
+        <%= form.label :original_url, t('little_url.new.original_url_text'), class: "form-label" %>
+        <%= form.text_field :original_url, required: true, class: "form-control" %>
+      </div>
 
-  <div>
-    <%= form.label :token, t('little_url.new.token') %><br>
-    <%= form.text_field :token, required: true %>
-  </div>
+      <div class="col-md-12">
+        <%= form.label :token, t('little_url.new.token'), class: "form-label" %>
+        <%= form.text_field :token, required: true, class: "form-control" %>
+      </div>
 
-  <div>
-    <%= form.label :description, t('little_url.new.description') %><br>
-    <%= form.text_area :description %>
-  </div>
+      <div class="col-md-12">
+        <%= form.label :description, t('little_url.new.description'), class: "form-label" %>
+        <%= form.text_area :description, rows: 3, class: "form-control" %>
+      </div>
 
-  <div>
-    <%= form.submit t('little_url.new.action') %>
-    <% if @little_url.persisted? %>
-      <%= link_to t('little_url.edit.back_home'), root_path %>
+      <div class="col-12 d-flex gap-2">
+        <%= form.submit t('little_url.new.action'), class: "btn btn-primary", id: "submit-button", disabled: true %>
+        <% if @urls.any? %>
+          <button class="btn btn-outline-primary"
+                  type="button"
+                  data-bs-toggle="offcanvas"
+                  data-bs-target="#offcanvasRight"
+                  aria-controls="offcanvasRight"><%= t('little_url.new.my_urls_button') %></button>
+        <% end %>
+        <% if @little_url.persisted? %>
+          <%= link_to t('little_url.edit.back_home'), root_path, class: "btn btn-outline-primary" %>
+        <% end %>
+      </div>
     <% end %>
+  </div>
+</div>
+
+<% if @little_url.errors.any? %>
+  <div class="alert alert-danger alert-dismissible fade show mt-3">
+    <ul class="mb-0">
+      <% @little_url.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
   </div>
 <% end %>
 
-<% if @little_url.errors.any? %>
-  <ul>
-    <% @little_url.errors.full_messages.each do |message| %>
-      <li><%= message %></li>
-    <% end %>
-  </ul>
+<% flash.each do |type, message| %>
+  <% bootstrap_class = type == "notice" ? "alert-success" : "alert-danger" %>
+  <div class="alert <%= bootstrap_class %> alert-dismissible fade show mt-3" role="alert">
+    <%= message %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
 <% end %>

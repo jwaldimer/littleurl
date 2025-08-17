@@ -1,6 +1,5 @@
 module LittleUrls
   class NormalizeParams < ApplicationInteractor
-
     def call
       params = context.params
 

@@ -1,6 +1,5 @@
 module LittleUrls
   class Save < ApplicationInteractor
-
     def call
       record = context.little_url
       record.save!

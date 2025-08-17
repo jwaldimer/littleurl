@@ -1,2 +1,10 @@
-<h1><%= t('little_url.edit.title') %></h1>
-<%= render 'form' %>
+<div class="container mt">
+  <div class="row">
+    <div class="col-md-5 mx-auto p-2">
+      <h1 class="h1 mt-5 mb-4 align-middle"><%= t('little_url.new.title') %></h1>
+      <h4 class="h4"><%= t('little_url.edit.title') %></h4>
+      <%= render 'form' %>
+    </div>
+  </div>
+  <%= render 'my_urls' %>
+</div>

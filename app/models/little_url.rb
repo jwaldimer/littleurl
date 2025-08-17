@@ -10,11 +10,17 @@ class LittleUrl < ApplicationRecord
 
   validates :original_url, presence: true, format: URI::DEFAULT_PARSER.make_regexp
   validate  :original_url_must_be_valid
-  validates :token, presence: true, uniqueness: true,
+  validates :token, presence: true,
+                    uniqueness: { case_sensitive: false },
                     format: { with: VALID_TOKEN_REGEX },
                     length: { maximum: 50 }
+  validates :slug, uniqueness: { case_sensitive: false }
   validates :creator_id, presence: true
   validate :token_not_reserved
+
+  def normalize_friendly_id(input)
+    input.to_s
+  end
 
   private
 
@@ -33,5 +39,9 @@ class LittleUrl < ApplicationRecord
 
   def should_generate_new_friendly_id?
     token_changed? || super
+  end
+
+  def sync_slug_from_token
+    slug = token if token.present?
   end
 end
