@@ -1,14 +1,20 @@
 <div class="card mb-3">
   <div class="card-body">
-    <%= form_with model: @little_url, local: true, html: { class: "row g-3" } do |form| %>
+    <%= form_with model: @little_url, local: true, html: { class: "row g-3" }, data: { controller: "form-validation" } do |form| %>
       <div class="col-12">
         <%= form.label :original_url, t('little_url.new.original_url_text'), class: "form-label" %>
-        <%= form.text_field :original_url, required: true, class: "form-control" %>
+        <%= form.text_field :original_url,
+            required: true,
+            class: "form-control",
+            data: { "form-validation-target": "originalUrl", action: "input->form-validation#validate" } %>
       </div>
 
       <div class="col-md-12">
         <%= form.label :token, t('little_url.new.token'), class: "form-label" %>
-        <%= form.text_field :token, required: true, class: "form-control" %>
+        <%= form.text_field :token,
+            required: true,
+            class: "form-control",
+            data: { "form-validation-target": "token", action: "input->form-validation#validate" } %>
       </div>
 
       <div class="col-md-12">
@@ -17,13 +23,21 @@
       </div>
 
       <div class="col-12 d-flex gap-2">
-        <%= form.submit t('little_url.new.action'), class: "btn btn-primary", id: "submit-button", disabled: true %>
+        <%= form.submit t('little_url.new.action'),
+            class: "btn btn-primary",
+            id: "submit-button",
+            disabled: true,
+            data: { "form-validation-target": "submit" }
+        %>
         <% if @urls.any? %>
-          <button class="btn btn-outline-primary"
-                  type="button"
-                  data-bs-toggle="offcanvas"
-                  data-bs-target="#offcanvasRight"
-                  aria-controls="offcanvasRight"><%= t('little_url.new.my_urls_button') %></button>
+          <button 
+            class="btn btn-outline-primary"
+            type="button"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#offcanvas"
+            aria-controls="offcanvas">
+            <%= t('little_url.new.my_urls_button') %>
+          </button>
         <% end %>
         <% if @little_url.persisted? %>
           <%= link_to t('little_url.edit.back_home'), root_path, class: "btn btn-outline-primary" %>

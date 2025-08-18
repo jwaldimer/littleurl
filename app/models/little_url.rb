@@ -13,7 +13,7 @@ class LittleUrl < ApplicationRecord
   validates :token, presence: true,
                     uniqueness: { case_sensitive: false },
                     format: { with: VALID_TOKEN_REGEX },
-                    length: { maximum: 50 }
+                    length: { in: 5..50 }
   validates :slug, uniqueness: { case_sensitive: false }
   validates :creator_id, presence: true
   validate :token_not_reserved

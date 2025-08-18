@@ -1,5 +1,10 @@
 <% if @urls.any? %>
-  <div class="offcanvas offcanvas-end w-50" data-bs-scroll="true" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasWithBothOptionsLabel">
+  <div 
+    class="offcanvas offcanvas-end w-50"
+    data-bs-scroll="true"
+    tabindex="-1"
+    id="offcanvas"
+    aria-labelledby="offcanvasWithBothOptionsLabel">
     <div class="offcanvas-header m-3 mb-0 pb-0">
       <h3 class="offcanvas-title" id="offcanvasRightLabel"><%= t('little_url.new.my_urls') %></h3>
       <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -14,27 +19,35 @@
             <h6 class="card-subtitle mb-2 text-body-secondary"><%= url.original_url %></h6>
             <p class="card-text mb-1"><%= url.description %></p>
             <p class="card-text mb-1"><small class="text-muted"><%= "#{time_ago_in_words(url.created_at)} ago" %></small></p>
+
             <div class="btn-group" role="group" aria-label="Basic outlined example">
               <%= link_to t('little_url.new.visit_url'), short_link, target: :_blank, rel: :noopener, class: "btn btn-outline-primary" %>
-              <%= link_to t('little_url.edit.link'), edit_little_url_path(url.token), data: { turbo: true }, class: "btn btn-outline-primary" %>
-              <%= link_to t('little_url.new.copy'), "#copy",
-                data: { turbo: true },
-                class: "copy-btn btn btn-outline-primary",
-                data: { copy: short_link } 
-              %>
+              <button 
+                type="button"
+                class= "btn btn-outline-primary"
+                data-controller="clipboard"
+                data-clipboard-text-value="<%= short_link %>"
+                data-action="clipboard#copy">
+                <%= t('little_url.new.copy') %>
+              </button>
               <%= link_to t('little_url.new.show_qr'), "#show-qr-#{url.id}",
                 data: { turbo: true },
                 class: "btn btn-outline-primary",
                 aria: { expanded: "false", controls: "show-qr-#{url.id}"},
                 data: { "bs-toggle": "collapse", }
               %>
+              <%= link_to t('little_url.edit.link'),
+                edit_little_url_path(url.token),
+                data: { turbo: true },
+                class: "btn btn-outline-primary" %>
               <%= link_to t('little_url.destroy.button'),
                 little_url_path(url),
                 data: { turbo_method: :delete, turbo_confirm: t('little_url.destroy.confirm') },
                 class: "btn btn-outline-primary"
               %>
             </div>
-            <div class="collapse mt-2" id="<%= "show-qr-#{url.id}" %>">
+
+            <div class="collapse mt-2 w-50" id="<%= "show-qr-#{url.id}" %>">
               <div class="card card-body">
                 <%= qr_svg_for(short_link, module_size: 6) %>
               </div>
