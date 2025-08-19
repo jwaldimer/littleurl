@@ -44,16 +44,16 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
+
+  gem "rspec-rails", "~> 8.0"
+  gem "factory_bot_rails", "~> 6.5"
+  gem "faker", "~> 3.5"
 end
 
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
 end
-
-gem "rspec-rails", "~> 8.0"
-gem "factory_bot_rails", "~> 6.5"
-gem "faker", "~> 3.5"
 
 gem "interactor", "~> 3.0"
 gem 'friendly_id', '~> 5.5.0'

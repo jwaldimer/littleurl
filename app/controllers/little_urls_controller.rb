@@ -1,5 +1,5 @@
 class LittleUrlsController < ApplicationController
-  before_action :set_little_url, only: %i[edit]
+  before_action :set_little_url, only: %i[edit update]
 
   def new
     @little_url = LittleUrl.new
@@ -14,27 +14,29 @@ class LittleUrlsController < ApplicationController
     set_url_list
 
     if result.success?
-      redirect_to root_path(result.little_url), notice: I18n.t('little_url.create.created')
+      redirect_to root_path(result.little_url), notice: I18n.t("little_url.create.created")
     else
       @little_url = result.little_url || LittleUrl.new(little_url_params)
       flash.now[:alert] = result.message
-      render :new, status: :unprocessable_entity      
+      render :new, status: :unprocessable_entity
     end
   end
 
   def edit
     set_url_list
   end
-  
+
   def update
     result = LittleUrls::Update.call(
       id: params[:id],
       params: little_url_params.to_h.symbolize_keys
     )
 
+    set_url_list
     if result.success?
-      redirect_to root_path(result.little_url), notice: I18n.t('little_url.update.updated')
+      redirect_to root_path(result.little_url), notice: I18n.t("little_url.update.updated")
     else
+      @little_url = result.little_url || @little_url
       flash.now[:alert] = result.message
       render :edit, status: :unprocessable_entity
     end
@@ -44,19 +46,19 @@ class LittleUrlsController < ApplicationController
     result = LittleUrls::Delete.call(id: params[:id], creator_id: creator_id)
 
     if result.success?
-      redirect_to root_path, notice: t('little_url.destroy.deleted')
+      redirect_to root_path, notice: t("little_url.destroy.deleted")
     else
       redirect_to root_path, alert: result.message
-    end    
+    end
   end
 
   def destroy_all
     result = LittleUrls::DestroyAll.call(creator_id: creator_id)
 
     if result.success?
-      redirect_to root_path, notice: t('little_url.destroy_all.deleted')
+      redirect_to root_path, notice: t("little_url.destroy_all.deleted")
     else
-      redirect_to root_path, alert: t('little_url.destroy_all.failed')
+      redirect_to root_path, alert: t("little_url.destroy_all.failed")
     end
   end
 
