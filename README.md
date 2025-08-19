@@ -71,6 +71,7 @@ It allows users (even without registration) to shorten URLs, customize their tok
   - The shortened link.
   - The original URL.
   - The description.
+  - A visits counter.
   - The creation time.
   - A **Visit URL** button to use the LittleURL.
   - A **Copy** button to copy the link.

@@ -13,13 +13,14 @@
     <div class="offcanvas-body pt-0">
       <% @urls.each do |url| %>
         <% short_link = redirect_url(url.friendly_id) %>
-        <div class="card m-3">
+        <div class="card m-2">
           <div class="card-body">
             <h5 class="card-title"><%= short_link %></h5>
             <h6 class="card-subtitle mb-2 text-body-secondary"><%= url.original_url %></h6>
             <p class="card-text mb-1"><%= url.description %></p>
-            <p class="card-text mb-1"><small class="text-muted"><%= "#{time_ago_in_words(url.created_at)} ago" %></small></p>
-
+            <span class="badge rounded-pill bg-primary"><%= t('little_url.new.visits', count: url.visits.count) %></span>
+            <p class="card-text mb-1"><small class="text-muted"><%= t('little_url.new.ago', ago: time_ago_in_words(url.created_at)) %></small></p>
+            
             <div class="btn-group" role="group" aria-label="Basic outlined example">
               <%= link_to t('little_url.new.visit_url'), short_link, target: :_blank, rel: :noopener, class: "btn btn-outline-primary" %>
               <button 

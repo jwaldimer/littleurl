@@ -48,8 +48,12 @@ en:
       visit_url: Visit URL
       copy: Copy
       show_qr: Show QR
+      ago: "created %{ago} ago"
+      visits:
+        one: "%{count} visit"
+        other: "%{count} visits"
     create:
-      created: Little URL token created.
+      created: Little URL token created
       errors:
         missing_params: Missing parameters
         missing_creator: creator_id is required
